@@ -15,4 +15,16 @@ io.sockets.on('connection', function (socket) {
         console.log('slideto', data);
         socket.broadcast.emit('slideto', data);
     });
+
+
+
+		socket.on('vote', function (data) {
+	        console.log(data);
+			socket.broadcast.emit('vote', data, clientId);
+	        socket.emit('setenabled', false);
+	  	});
+
+	    socket.on('openpoll', function(open){
+	        socket.broadcast.emit('setenabled', open);
+	    });
 });

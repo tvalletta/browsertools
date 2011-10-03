@@ -1,4 +1,4 @@
-var socket = io.connect('http://10.109.38.188:3001');
+var socket = io.connect('http://localhost:3001');
 
 if (window.location.href.indexOf("remote") > 0) {
     document.addEventListener("slideenter", function(evt) {
