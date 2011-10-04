@@ -24,85 +24,81 @@
     <script src="js/remote.js"></script>
     <script src="js/vote.js"></script>
 
-    <script>
-    </script>
+	<style>
+		@font-face {
+		    font-family: 'AirstreamRegular';
+		    src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot');
+		    src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('fonts/Airstream-fontfacekit/Airstream-webfont.woff') format('woff'),
+		         url('fonts/Airstream-fontfacekit/Airstream-webfont.ttf') format('truetype'),
+		         url('fonts/Airstream-fontfacekit/Airstream-webfont.svg#AirstreamRegular') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+		@font-face {
+		    font-family: 'FontleroyBrownRegular';
+		    src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot');
+		    src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.woff') format('woff'),
+		         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.ttf') format('truetype'),
+		         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.svg#FontleroyBrownRegular') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+
+		}
+		@font-face {
+		    font-family: 'Gladifilthefte';
+		    src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot');
+		    src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.woff') format('woff'),
+		         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.ttf') format('truetype'),
+		         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.svg#GladifilthefteGladifilthefte') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+
+		}
+		@font-face {
+		    font-family: 'MyFont';
+		    src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot');
+		    src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.woff') format('woff'),
+		         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.ttf') format('truetype'),
+		         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.svg#HornswoggledNormal') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+
+		}
+		@font-face {
+		    font-family: 'MirageRegular';
+		    src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot');
+		    src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.woff') format('woff'),
+		         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.ttf') format('truetype'),
+		         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.svg#MirageRegular') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+
+		}
+		@font-face {
+		    font-family: 'Matchbook';
+		    src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot');
+		    src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.woff') format('woff'),
+		         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.ttf') format('truetype'),
+		         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.svg#MatchbookMatchbook') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+
+		}
+
+	    canvas.pie{
+	        position: absolute;
+	        right: 10px;
+	        bottom: 10px;
+	    }
+	</style>
 
 </head>
-
-<style>
-	@font-face {
-	    font-family: 'AirstreamRegular';
-	    src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot');
-	    src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot?#iefix') format('embedded-opentype'),
-	         url('fonts/Airstream-fontfacekit/Airstream-webfont.woff') format('woff'),
-	         url('fonts/Airstream-fontfacekit/Airstream-webfont.ttf') format('truetype'),
-	         url('fonts/Airstream-fontfacekit/Airstream-webfont.svg#AirstreamRegular') format('svg');
-	    font-weight: normal;
-	    font-style: normal;
-	}
-	@font-face {
-	    font-family: 'FontleroyBrownRegular';
-	    src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot');
-	    src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot?#iefix') format('embedded-opentype'),
-	         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.woff') format('woff'),
-	         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.ttf') format('truetype'),
-	         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.svg#FontleroyBrownRegular') format('svg');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-	@font-face {
-	    font-family: 'Gladifilthefte';
-	    src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot');
-	    src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot?#iefix') format('embedded-opentype'),
-	         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.woff') format('woff'),
-	         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.ttf') format('truetype'),
-	         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.svg#GladifilthefteGladifilthefte') format('svg');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-	@font-face {
-	    font-family: 'MyFont';
-	    src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot');
-	    src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot?#iefix') format('embedded-opentype'),
-	         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.woff') format('woff'),
-	         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.ttf') format('truetype'),
-	         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.svg#HornswoggledNormal') format('svg');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-	@font-face {
-	    font-family: 'MirageRegular';
-	    src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot');
-	    src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot?#iefix') format('embedded-opentype'),
-	         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.woff') format('woff'),
-	         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.ttf') format('truetype'),
-	         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.svg#MirageRegular') format('svg');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-	@font-face {
-	    font-family: 'Matchbook';
-	    src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot');
-	    src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot?#iefix') format('embedded-opentype'),
-	         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.woff') format('woff'),
-	         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.ttf') format('truetype'),
-	         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.svg#MatchbookMatchbook') format('svg');
-	    font-weight: normal;
-	    font-style: normal;
-
-	}
-
-    canvas.pie{
-        position: absolute;
-        right: 10px;
-        bottom: 10px;
-    }
-</style>
-
 <body style='display: none'>
 
 <section class='slides layout-regular template-default'>
@@ -504,7 +500,12 @@
             There is more text just underneath.
         </p>
     </article>
+
 </section>
 
+<script src="js/resources.js"></script>
+<script>
+	var siteRes = SiteResources();
+</script>
 </body>
 </html>
