@@ -18,762 +18,945 @@
     <meta charset='utf-8'>
     <meta name="viewport" content="width=980">
 
-	<link rel="stylesheet" href="css/poll.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="css/poll.css" type="text/css" media="screen"/>
     <script src='js/slides/slides.js'></script>
     <script src="js/socket.io/socket.io.min.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/remote.js"></script>
     <script src="js/vote.js"></script>
 
-	<style>
-		@font-face {
-		    font-family: 'AirstreamRegular';
-		    src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot');
-		    src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot?#iefix') format('embedded-opentype'),
-		         url('fonts/Airstream-fontfacekit/Airstream-webfont.woff') format('woff'),
-		         url('fonts/Airstream-fontfacekit/Airstream-webfont.ttf') format('truetype'),
-		         url('fonts/Airstream-fontfacekit/Airstream-webfont.svg#AirstreamRegular') format('svg');
-		    font-weight: normal;
-		    font-style: normal;
-		}
-		@font-face {
-		    font-family: 'FontleroyBrownRegular';
-		    src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot');
-		    src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot?#iefix') format('embedded-opentype'),
-		         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.woff') format('woff'),
-		         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.ttf') format('truetype'),
-		         url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.svg#FontleroyBrownRegular') format('svg');
-		    font-weight: normal;
-		    font-style: normal;
+    <style>
 
-		}
-		@font-face {
-		    font-family: 'Gladifilthefte';
-		    src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot');
-		    src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot?#iefix') format('embedded-opentype'),
-		         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.woff') format('woff'),
-		         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.ttf') format('truetype'),
-		         url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.svg#GladifilthefteGladifilthefte') format('svg');
-		    font-weight: normal;
-		    font-style: normal;
+        .grid {
+            background-color: #269 !important;
+            background-image: -webkit-linear-gradient(white 2px, transparent 2px), -webkit-linear-gradient(0, white 2px, transparent 2px), -webkit-linear-gradient(rgba(255, 255, 255, .3) 1px, transparent 1px), -webkit-linear-gradient(0, rgba(255, 255, 255, .3) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px
+        }
 
-		}
-		@font-face {
-		    font-family: 'MyFont';
-		    src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot');
-		    src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot?#iefix') format('embedded-opentype'),
-		         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.woff') format('woff'),
-		         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.ttf') format('truetype'),
-		         url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.svg#HornswoggledNormal') format('svg');
-		    font-weight: normal;
-		    font-style: normal;
+        table tbody tr td:nth-child(n+2) {
+            /*background: green;*/
+            text-align: center;
+        }
 
-		}
-		@font-face {
-		    font-family: 'MirageRegular';
-		    src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot');
-		    src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot?#iefix') format('embedded-opentype'),
-		         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.woff') format('woff'),
-		         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.ttf') format('truetype'),
-		         url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.svg#MirageRegular') format('svg');
-		    font-weight: normal;
-		    font-style: normal;
+        .chrome {
+            background: url(images/chrome-48.png) no-repeat center center;
+            width: 48px;
+            height: 48px;
+        }
 
-		}
-		@font-face {
-		    font-family: 'Matchbook';
-		    src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot');
-		    src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot?#iefix') format('embedded-opentype'),
-		         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.woff') format('woff'),
-		         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.ttf') format('truetype'),
-		         url('fonts/Matchbook-fontfacekit/Matchbook-webfont.svg#MatchbookMatchbook') format('svg');
-		    font-weight: normal;
-		    font-style: normal;
+        .ff {
+            background: url(images/ff-48.png) no-repeat center center;
+            width: 48px;
+            height: 48px;
+        }
 
-		}
+        .ie {
+            background: url(images/ie-48.png) no-repeat center center;
+            width: 48px;
+            height: 48px;
+        }
 
-	    canvas.pie{
-	        position: absolute;
-	        right: 10px;
-	        bottom: 10px;
-	    }
-	</style>
+        td.yes {
+            background: url(images/ok.png) no-repeat center center;
+        }
+
+        td.yes2 {
+            background: url(images/ok2.png) no-repeat center center;
+        }
+
+        td.yes3 {
+            background: url(images/ok3.png) no-repeat center center;
+            opacity: .5;
+        }
+
+        @font-face {
+            font-family: 'AirstreamRegular';
+            src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot');
+            src: url('fonts/Airstream-fontfacekit/Airstream-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Airstream-fontfacekit/Airstream-webfont.woff') format('woff'), url('fonts/Airstream-fontfacekit/Airstream-webfont.ttf') format('truetype'), url('fonts/Airstream-fontfacekit/Airstream-webfont.svg#AirstreamRegular') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'FontleroyBrownRegular';
+            src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot');
+            src: url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.woff') format('woff'), url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.ttf') format('truetype'), url('fonts/FontleroyBrown-fontfacekit/FontleroyBrown-webfont.svg#FontleroyBrownRegular') format('svg');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        @font-face {
+            font-family: 'Gladifilthefte';
+            src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot');
+            src: url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.woff') format('woff'), url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.ttf') format('truetype'), url('fonts/Gladifilthefte-fontfacekit/Gladifilthefte-webfont.svg#GladifilthefteGladifilthefte') format('svg');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        @font-face {
+            font-family: 'MyFont';
+            src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot');
+            src: url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.woff') format('woff'), url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.ttf') format('truetype'), url('fonts/Hornswoggled-fontfacekit/HORNSWOG-webfont.svg#HornswoggledNormal') format('svg');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        @font-face {
+            font-family: 'MirageRegular';
+            src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot');
+            src: url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.woff') format('woff'), url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.ttf') format('truetype'), url('fonts/Magenta-fontfacekit/Magenta_BBT-webfont.svg#MirageRegular') format('svg');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        @font-face {
+            font-family: 'Matchbook';
+            src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot');
+            src: url('fonts/Matchbook-fontfacekit/Matchbook-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/Matchbook-fontfacekit/Matchbook-webfont.woff') format('woff'), url('fonts/Matchbook-fontfacekit/Matchbook-webfont.ttf') format('truetype'), url('fonts/Matchbook-fontfacekit/Matchbook-webfont.svg#MatchbookMatchbook') format('svg');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        canvas.pie {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+    </style>
 
 </head>
 <body style='display: none'>
 
 <section class='slides layout-regular template-default'>
 
-    <article>
-        <h1>
-            Browser Dev Tools
-        </h1>
+<article class="biglogo">
+    <h1>
+        Browser Dev Tools
+    </h1>
 
-        <p>
-            Gabriel Dayley &amp; Thomas A. Valletta
-            <br>
-            Oct 1X, 2011
-        </p>
-    </article>
+    <p>
+        Gabriel Dayley &amp; Thomas A. Valletta
+        <br>
+        Oct 1X, 2011
+    </p>
+</article>
 
-    <article>
-        <h1>DOM Inspection</h1>
-    </article>
+<article>
+    <h1>DOM Inspection</h1>
+</article>
 
-	<article>
-		<h3>Element Highlighting</h3>
-		<table>
-			<!-- hit the magnifying glass -->
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Page Elements</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Inspector</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>DOM Properties</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Element Hierarchy</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Box Model</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>Element Highlighting</h3>
+    <table>
+        <!-- hit the magnifying glass -->
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Page Elements</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Inspector</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>DOM Properties</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Element Hierarchy</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Box Model</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
 
-	<article>
-		<h3>View Markup</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Inline edit</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Code folding</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Show comments</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Visual cue for hidden elements</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Visual cue for modified elements</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>View Markup</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Inline edit</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Code folding</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Show comments</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Visual cue for hidden elements</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Visual cue for modified elements</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
 
-	<article>
-		<h3>DOM Properties</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>View properties and values</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Show Inheritance</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Edit properties and values</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>DOM Properties</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>View properties and values</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Show Inheritance</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Edit properties and values</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
 
-	<article>
-		<h3>DOM Breakpoints</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Page Change</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Attribute Change</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Subtree Change</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Element Removal</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>DOM Breakpoints</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Page Change</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Attribute Change</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Subtree Change</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Element Removal</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
 
-	<article>
-		<h3>DOM Element Bindings</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Event Listeners</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>jQuery Data</td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>DOM Element Bindings</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Event Listeners</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>jQuery Data</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
 
-    <article>
-        <h1>CSS Manipulation</h1>
-    </article>
+<article>
+    <h1>CSS Manipulation</h1>
+</article>
 
-	<article>
-		<h3>Styles</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<!-- full, categorized -->
-					<td>Computed</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Inline</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Matched rules</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Element states</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>Styles</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!-- full, categorized -->
+            <td>Computed</td>
+            <td class="yes"></td>
+            <td class="yes2"></td>
+            <td class="yes3"></td>
+        </tr>
+        <tr>
+            <td>Inline</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes3"></td>
+        </tr>
+        <tr>
+            <td>Matched rules</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes3"></td>
+        </tr>
+        <tr>
+            <td>Element states</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
 
-	<article>
-		<h3>DOM Inspection &amp; CSS Manipulation</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
+<article>
+    <h3>DOM Inspection &amp; CSS Manipulation</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        Site Resources
+    </h1>
+</article>
+
+<article>
+    <h3>Site Resources</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        Network Tools
+    </h1>
+</article>
+
+<article>
+    <h3>Network Tools</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        Script Debugging
+    </h1>
+</article>
+
+<article>
+    <h3>Script Debugging</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        Profiling
+    </h1>
+</article>
+
+<article>
+    <h3>Profiling</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+
+
+<article>
+    <h1>
+        Site Resources
+    </h1>
+</article>
+
+<article>
+    <h3>Resources</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Frames</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <div style='width: 400px; height: 200px; margin-left: auto; margin-right: auto; padding: 20px'>
+        <iframe src='vote.html'>
+        </iframe>
+    </div>
+</article>
+
+<article>
+    <h3>Resources</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Databases</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Local Storage</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Session Storage</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Cookies</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Application Cache</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
+
+<article>
+    <h3>Site Resources</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        Network Tools
+    </h1>
+</article>
+
+<article>
+    <h3>Grid</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Domain</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Remote IP</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Method</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Content Type</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Status Code</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Size</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
+
+<article>
+    <h3>Timeline</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>DNS Lookup</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Connecting</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Sending</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Waiting</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Receiving</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Total requests</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Total data transferred</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Total data from cache</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>DOMContentLoaded</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>onload</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
+
+<article>
+    <h3>Drill Down</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Headers</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Content</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Cookies</td>
+            <td class="yes"></td>
+            <td class="yes3"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Cache</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Timing</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Formatting</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Filtering</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
+            <td>Web Sockets</td>
+            <td></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
+
+<article>
+    <h3>Network Tools</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        Script Debugging
+    </h1>
+</article>
+
+<article>
+    <h3>Script Debugging</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        Profiling
+    </h1>
+</article>
+
+<article>
+    <h3>Profiling</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
+
+<article>
+    <h1>
+        The Console
+    </h1>
+</article>
+
+<article>
+    <h3>The console</h3>
+    <ul>
+        <li>Not just for logging</li>
+        <li>Interact directly with JavaScript interpreter</li>
+        <li>Console API</li>
+        <ul>
+            <li>clear()</li>
+            <li>dir()</li>
+            <li>dirxml()</li>
+            <li>inspect()</li>
+            <li>$0</li>
+            <li>copy()</li>
         </ul>
-    </article>
+    </ul>
+</article>
 
-	<article>
-        <h1>
-            Site Resources
-        </h1>
-    </article>
 
-	<article>
-		<h3>Resources</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Frames</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-		<div style='width: 400px; height: 200px; margin-left: auto; margin-right: auto; padding: 20px'>
-			<iframe src='vote.html'>
-			</iframe>
-		</div>
-	</article>
+<article>
+    <h3>The Console</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Logging</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Multi-line</td>
+            <td class="yes"></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Console API</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</article>
 
-	<article>
-		<h3>Resources</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Databases</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Local Storage</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Session Storage</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Cookies</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Application Cache</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>The Console</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
 
-	<article>
-		<h3>Site Resources</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
-        </ul>
-    </article>
 
-    <article>
-        <h1>
-            Network Tools
-        </h1>
-    </article>
 
-	<article>
-		<h3>Grid</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Domain</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Remote IP</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Method</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Content Type</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Status Code</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Size</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h1>
+        Add-ons &amp; Extensions
+    </h1>
+</article>
 
-	<article>
-		<h3>Timeline</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>DNS Lookup</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Connecting</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Sending</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Waiting</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Receiving</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Total requests</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Total data transferred</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Total data from cache</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>DOMContentLoaded</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>onload</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h3>Add-ons &amp; Extensions</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
 
-	<article>
-		<h3>Drill Down</h3>
-		<table>
-			<thead>
-				<tr>
-					<th></th>
-					<th>Ch</th>
-					<th>FF</th>
-					<th>IE</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Headers</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Content</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Cookies</td>
-					<td>x</td>
-					<td>/</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Cache</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Timing</td>
-					<td>x</td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Formatting</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Filtering</td>
-					<td>x</td>
-					<td>x</td>
-					<td>x</td>
-				</tr>
-				<tr>
-					<td>Web Sockets</td>
-					<td></td>
-					<td>x</td>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
-	</article>
+<article>
+    <h1>
+        Under the Hood
+    </h1>
+</article>
 
-	<article>
-		<h3>Network Tools</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
-        </ul>
-    </article>
+<article>
+    <h3>Under the Hood</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
 
-    <article>
-        <h1>
-            Script Debugging
-        </h1>
-    </article>
 
-	<article>
-		<h3>Script Debugging</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
-        </ul>
-    </article>
+<article>
+    <h1>
+        Add-ons &amp; Extensions
+    </h1>
+</article>
 
-    <article>
-        <h1>
-            Profiling
-        </h1>
-    </article>
+<article>
+    <h3>Add-ons &amp; Extensions</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
 
-	<article>
-		<h3>Profiling</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
-        </ul>
-    </article>
+<article>
+    <h1>
+        Under the Hood
+    </h1>
+</article>
 
-    <article>
-        <h1>
-            The Console
-        </h1>
-    </article>
+<article>
+    <h3>Under the Hood</h3>
+    <h4>Who won?</h4>
+    <canvas width="500" height="500" class="pie"></canvas>
+    <ul class="poll">
+        <li rel="A">Chrome</li>
+        <li rel="B">Firefox</li>
+        <li rel="C">Internet Explorer</li>
+    </ul>
+</article>
 
-	<article>
-		<h3>The Console</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
-        </ul>
-    </article>
-
-    <article>
-        <h1>
-            Add-ons &amp; Extensions
-        </h1>
-    </article>
-
-	<article>
-		<h3>Add-ons &amp; Extensions</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
-        </ul>
-    </article>
-
-    <article>
-        <h1>
-            Under the Hood
-        </h1>
-    </article>	
-
-	<article>
-		<h3>Under the Hood</h3>
-		<h4>Who won?</h4>
-        <canvas width="500" height="500" class="pie"></canvas>
-        <ul class="poll">
-            <li rel="A">Chrome</li>
-            <li rel="B">Firefox</li>
-            <li rel="C">Internet Explorer</li>
-        </ul>
-    </article>
-
-    <article>
-        <p>
-            This is a slide with just text. This is a slide with just text.
-            This is a slide with just text. This is a slide with just text.
-            This is a slide with just text. This is a slide with just text.
-        </p>
-
-        <p>
-            There is more text just underneath.
-        </p>
-    </article>
 
 </section>
 
 <script src="js/resources.js"></script>
 <script>
-	$.getJSON('data/json.json', null, function() {
-		console.log('Fetched JSON');
-	});
-	var siteRes = SiteResources();
+
+    $.getJSON('data/json.json', null, function() {
+        console.log('Fetched JSON');
+    });
+    var siteRes = SiteResources();
+
+    var siteRes = SiteResources();
+
 </script>
 </body>
 </html>
