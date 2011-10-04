@@ -1,0 +1,28 @@
+CACHE MANIFEST
+
+# Version: 0.1.0
+# Build: 034
+
+css/poll.css
+
+js/graffiti.js
+js/jquery.min.js
+js/remote.js
+js/resources.js
+js/server.js
+js/slides/prettify.js
+js/slides/slides.js
+js/slides/styles.css
+js/socket.io/socket.io.js
+js/socket.io/socket.io.min.js
+js/socket.io/WebSocketMain.swf
+js/socket.io/WebSocketMainInsecure.swf
+js/vote.js
+
+index.html
+vote.html
+
+NETWORK:
+*
+
+FALLBACK:

@@ -12,7 +12,7 @@
   URL: http://code.google.com/p/html5slides/
 -->
 
-<html>
+<html> <!-- manifest="manifest.cache" -->
 <head>
     <title>Presentation</title>
     <meta charset='utf-8'>
@@ -21,6 +21,7 @@
 	<link rel="stylesheet" href="css/poll.css" type="text/css" media="screen"/>
     <script src='js/slides/slides.js'></script>
     <script src="js/socket.io/socket.io.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/remote.js"></script>
     <script src="js/vote.js"></script>
 
@@ -377,6 +378,78 @@
     </article>
 
 	<article>
+		<h3>Resources</h3>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Ch</th>
+					<th>FF</th>
+					<th>IE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Frames</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div style='width: 400px; height: 200px; margin-left: auto; margin-right: auto; padding: 20px'>
+			<iframe src='vote.html'>
+			</iframe>
+		</div>
+	</article>
+
+	<article>
+		<h3>Resources</h3>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Ch</th>
+					<th>FF</th>
+					<th>IE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Databases</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Local Storage</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Session Storage</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Cookies</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Application Cache</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+	<article>
 		<h3>Site Resources</h3>
 		<h4>Who won?</h4>
         <canvas width="500" height="500" class="pie"></canvas>
@@ -392,6 +465,198 @@
             Network Tools
         </h1>
     </article>
+
+	<article>
+		<h3>Grid</h3>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Ch</th>
+					<th>FF</th>
+					<th>IE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Domain</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Remote IP</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Method</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Content Type</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Status Code</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Size</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+	<article>
+		<h3>Timeline</h3>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Ch</th>
+					<th>FF</th>
+					<th>IE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>DNS Lookup</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Connecting</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Sending</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Waiting</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Receiving</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Total requests</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Total data transferred</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Total data from cache</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>DOMContentLoaded</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>onload</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
+
+	<article>
+		<h3>Drill Down</h3>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Ch</th>
+					<th>FF</th>
+					<th>IE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Headers</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Content</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Cookies</td>
+					<td>x</td>
+					<td>/</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Cache</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Timing</td>
+					<td>x</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Formatting</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Filtering</td>
+					<td>x</td>
+					<td>x</td>
+					<td>x</td>
+				</tr>
+				<tr>
+					<td>Web Sockets</td>
+					<td></td>
+					<td>x</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</article>
 
 	<article>
 		<h3>Network Tools</h3>
@@ -505,6 +770,9 @@
 
 <script src="js/resources.js"></script>
 <script>
+	$.getJSON('data/json.json', null, function() {
+		console.log('Fetched JSON');
+	});
 	var siteRes = SiteResources();
 </script>
 </body>
