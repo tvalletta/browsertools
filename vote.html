@@ -3,10 +3,11 @@
 <head>
     <script src="js/jquery.min.js"></script>
     <script src="js/socket.io/socket.io.min.js"></script>
+    
     <script>
         var socket;
         var connect = function() {
-            socket = io.connect('http://10.109.37.189:3000');
+            socket = io.connect('http://localhost:3001');
 
             socket.on('ack', function(data) {
                 $("#container").removeClass("notconnected");
@@ -50,7 +51,9 @@
         }
 
         .button.green {
+            /*background: url(images/chrome-72.png) center center no-repeat;*/
             background-color: rgb(0, 138, 53);
+
         }
 
         .button.blue {
@@ -100,7 +103,7 @@
 
 
          #container.notconnected .button{
-            background: gray;
+            background-color: gray;
         }
 
     </style>

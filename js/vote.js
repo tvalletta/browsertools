@@ -1,6 +1,6 @@
 var socket;
 var connect = function() {
-	socket = io.connect('http://localhost:3000');
+	socket = io.connect('http://localhost:3001');
 
 	socket.on('ack', function(data) {
 		console.log(data);
