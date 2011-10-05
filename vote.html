@@ -3,7 +3,7 @@
 <head>
     <script src="js/jquery.min.js"></script>
     <script src="js/socket.io/socket.io.min.js"></script>
-    
+
     <script>
         var socket;
         var connect = function() {
@@ -44,24 +44,29 @@
             background: #666;
         }
 
-        #container{
+        #container {
             position: relative;
             margin: 0 auto;
             width: 380px
         }
 
         .button.green {
-            /*background: url(images/chrome-72.png) center center no-repeat;*/
-            background-color: rgb(0, 138, 53);
+            background: url(images/chrome-72.png) center center no-repeat;
+            background-color: white;
+            /*background-color: rgb(0, 138, 53);*/
 
         }
 
         .button.blue {
-            background-color: rgb(0, 102, 204);
+            background: url(images/ff-72.png) center center no-repeat;
+            background-color: white;
+            /*background-color: rgb(0, 102, 204);*/
         }
 
         .button.red {
-            background-color: rgb(255, 0, 0);
+            background: url(images/ie-72.png) center center no-repeat;
+            background-color: white;
+            /*background-color: rgb(255, 0, 0);*/
         }
 
         .button.yellow {
@@ -69,8 +74,11 @@
         }
 
         .button {
+            background-color: white;
             display: inline-block;
-            padding: 25px 35px;
+            /*padding: 25px 35px;*/
+            width: 72px;
+            height: 72px;
             font-size: 22px;
             border-radius: 5px;
             color: white;
@@ -101,8 +109,7 @@
             background: #777;
         }
 
-
-         #container.notconnected .button{
+        #container.notconnected .button {
             background-color: gray;
         }
 
@@ -111,10 +118,10 @@
 <body>
 <div id="mask"></div>
 <div id="container" class="notconnected">
-    <a href="#" class="button green" onclick="send('A')">A</a>
-    <a href="#" class="button blue" onclick="send('B')">B</a>
-    <a href="#" class="button red" onclick="send('C')">C</a>
-    <a href="#" class="button yellow" onclick="send('D')">D</a>
+    <a href="#" class="button green" onclick="send('A')"></a>
+    <a href="#" class="button blue" onclick="send('B')"></a>
+    <a href="#" class="button red" onclick="send('C')"></a>
+    <!--<a href="#" class="button yellow" onclick="send('D')">D</a>-->
 </div>
 
 
