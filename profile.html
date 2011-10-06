@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--<script type="text/javascript" src="js/jquery.js"></script>-->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <link href="css/profile.css" rel="stylesheet">
+
+    <script>
+        function addRows() {
+            var table = document.querySelector("#table");
+
+//                document.getElementById('table-div').removeChild(table);
+
+            for (var i = 0; i < 30000; i++) {
+                var row = document.createElement("tr");
+                var countCell = document.createElement("td");
+                countCell.appendChild(document.createTextNode(i));
+                row.appendChild(countCell);
+
+                var randomCell = document.createElement("td");
+                randomCell.appendChild(document.createTextNode(Math.random()));
+                row.appendChild(randomCell);
+                table.appendChild(row);
+            }
+
+//                document.getElementById('table-div').appendChild(table);
+        }
+    </script>
+</head>
+<body>
+
+
+<div id="container">
+    <h1>Using the profiling tools to improve performance</h1>
+    <div id="table-div">
+        <table id="table"></table>
+    </div>
+
+    <button onclick='addRows();'>Add 30,000 rows</button>
+
+    <div class="browsers">
+        <div class="ie"></div>
+        <div class="ff"></div>
+        <div class="chrome"></div>
+        <div class="opera"></div>
+        <div class="safari"></div>
+    </div>
+</div>
+</body>
+</html>

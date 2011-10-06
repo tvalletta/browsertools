@@ -1,0 +1,86 @@
+#container{
+    position: relative;
+    margin: auto;
+    width: 731px;
+}
+
+#table-div {
+    width: 700px;
+    height: 200px;
+    overflow: auto;
+    box-shadow: 0 0 35px #aaa;
+    margin: 35px 15px;
+}
+
+table {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    padding: 0;
+    width: 100%;
+}
+
+table tr:nth-child(2n+1) {
+    background: #bada55;
+}
+
+.browsers{
+
+
+}
+
+.browsers div {
+    display: inline-block;
+    width: 143px;
+    height: 143px;
+    -webkit-box-reflect: below 5px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.70, transparent), to(white));
+}
+
+.ie:not(.usesprites) {
+    background: url(../images/browsers/images/browsers_02.jpg) 50% 50% no-repeat;
+}
+
+.ff:not(.usesprites){
+    background: url(../images/browsers/images/browsers_01.jpg) 50% 50% no-repeat;
+}
+
+.chrome:not(.usesprites) {
+    background: url(../images/browsers/images/browsers_09.jpg) 50% 50% no-repeat;
+}
+.opera:not(.usesprites) {
+    background: url(../images/browsers/images/browsers_04.jpg) 50% 50% no-repeat;
+}
+.safari:not(.usesprites){
+    background: url(../images/browsers/images/browsers_08.jpg) 50% 50% no-repeat;
+}
+
+
+
+.usesprites > .ie {
+    -webkit-transition: -webkit-transform .5s ease-in;
+    /*background: url(../images/browsers.jpg) -143px 0;*/
+    background: url(../images/browsers/images/browsers_02.jpg) 50% 50% no-repeat;
+}
+
+.usesprites > .ff {
+    background: url(../images/browsers/browsers.jpg) 0 0;
+    /*background: url(../images/browsers/images/browsers_01.jpg) 50% 50% no-repeat;*/
+}
+
+.usesprites > .chrome {
+    background: url(../images/browsers/browsers.jpg) -286px -286px;
+    /*background: url(../images/browsers/images/browsers_09.jpg) 50% 50% no-repeat;*/
+}
+.usesprites > .opera {
+    background: url(../images/browsers/browsers.jpg) 0px -143px;
+    /*background: url(../images/browsers/images/browsers_04.jpg) 50% 50% no-repeat;*/
+}
+.usesprites > .safari {
+    background: url(../images/browsers/browsers.jpg) -143px -286px;
+    /*background: url(../images/browsers/images/browsers_08.jpg) 50% 50% no-repeat;*/
+}
+
+.shrink{
+    -webkit-transition: -webkit-transform .5s ease-in;
+    -webkit-transform: scale(.7);
+}
+

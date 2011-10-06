@@ -1,6 +1,7 @@
 var socket = io.connect('http://localhost:3001');
 
 if (window.location.href.indexOf("remote") > 0) {
+    alert("remote");
     document.addEventListener("slideenter", function(evt) {
         socket.emit('slideto', {slideNumber: evt.slideNumber});
     });

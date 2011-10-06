@@ -26,7 +26,7 @@
     <script src="js/debug.js"></script>
     <script src="js/vote.js"></script>
 
-    <script type="text/javascript" src="http://localhost:8080/target/target-script-min.js#anonymous"></script>
+    <!--<script type="text/javascript" src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
 
     <style>
 
@@ -868,6 +868,41 @@
 
 <article>
     <h3>Profiling</h3>
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="chrome"></th>
+            <th class="ff"></th>
+            <th class="ie"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Analyze resource loading, parsing, rendering</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td class="">??</td>
+        </tr>
+        <tr>
+            <td>Profile execution time</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+            <td>??</td>
+        </tr>
+        <tr>
+            <td>Profile memory usage</td>
+            <td class="yes"></td>
+            <td>??</td>
+            <td>??</td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="profile.html">Profile this page</a>
+</article>
+
+<article>
+    <h3>Profiling</h3>
     <h4>Who won?</h4>
     <canvas width="500" height="500" class="pie"></canvas>
     <ul class="poll">
@@ -963,13 +998,19 @@
         </thead>
         <tbody>
             <tr>
-                <td>API for Add-ons</td>
+                <td>API for Add-On's</td>
                 <td class="yes3"></td>
                 <td class="yes"></td>
                 <td></td>
             </tr>
             <tr>
                 <td>Remote Debugging</td>
+                <td class="yes"></td>
+                <td class="yes3"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Masquerading</td>
                 <td class="yes"></td>
                 <td class="yes3"></td>
                 <td></td>
@@ -1046,14 +1087,11 @@
 
 <script src="js/resources.js"></script>
 <script>
-
     $.getJSON('data/json.json', null, function() {
         console.log('Fetched JSON');
     });
     var siteRes = SiteResources();
-
     var siteRes = SiteResources();
-
 </script>
 </body>
 </html>
