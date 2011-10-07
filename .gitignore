@@ -1,7 +1,5 @@
 .idea/*
-logs/*
 node_modules/*
 
 logs/error_log
-
 logs/access_log
