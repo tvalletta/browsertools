@@ -9,6 +9,7 @@ app.listen(3001);
 io.sockets.on('connection', function (socket) {
     var clientId = socket.id;
 
+    //Remote Control
     socket.emit('ack', { message: 'You are connected.' });
 
     socket.on('slideto', function(data) {
@@ -17,14 +18,14 @@ io.sockets.on('connection', function (socket) {
     });
 
 
+    //Voting
+    socket.on('vote', function (data) {
+        console.log(data);
+        socket.broadcast.emit('vote', data, clientId);
+        socket.emit('setenabled', false);
+    });
 
-		socket.on('vote', function (data) {
-	        console.log(data);
-			socket.broadcast.emit('vote', data, clientId);
-	        socket.emit('setenabled', false);
-	  	});
-
-	    socket.on('openpoll', function(open){
-	        socket.broadcast.emit('setenabled', open);
-	    });
+    socket.on('openpoll', function(open) {
+        socket.broadcast.emit('setenabled', open);
+    });
 });
