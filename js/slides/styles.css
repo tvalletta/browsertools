@@ -468,7 +468,7 @@ article.fill h3 {
     padding-right: 60px;
 }
 
-ul {
+article ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -478,22 +478,22 @@ ul {
     margin-left: .75em;
 }
 
-ul:first-child {
+article ul:first-child {
     margin-top: 0;
 }
 
-ul ul {
+article ul ul {
     margin-top: .5em;
 }
 
-li {
+article li {
     padding: 0;
     margin: 0;
 
     margin-bottom: .5em;
 }
 
-li::before {
+article li::before {
     content: '·';
 
     width: .75em;
