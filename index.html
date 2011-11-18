@@ -42,10 +42,11 @@
 				gold25 		= new RGBA(255, 247, 154, 0.25),
 				red 		= new RGBA(255, 9, 20, 0.75),
 				red25 		= new RGBA(255, 9, 20, 0.25),
-				blue 		= new RGBA(0, 173, 239, 0.75),
+				blue 		= new RGBA(0, 173, 239, 0.50),
 				blue25 		= new RGBA(0, 173, 239, 0.25),
 				purple 		= new RGBA(235, 0, 137, 0.75);
 			scale = OpinionScale(blue, blue25, "images/chrome-100x100.png", "images/firebug-100x100.png");
+//			scale = OpinionScale(gold75, gold25, "images/chrome-100x100.png", "images/firebug-100x100.png");
 
 			document.getElementsByTagName('body')[0].addEventListener('keydown', function(e) {
 				if (e.keyCode === 83) {
@@ -235,6 +236,12 @@
 		        </tr>
 		        </tbody>
 		    </table>
+    <div class="notes">
+        <ul>
+            <li>Firefox puts ruler when highlighting from box model</li>
+            <li>IE doesn't highlight page elements with box model</li>
+        </ul>
+    </div>
 		</article>
 
 		<article>
@@ -275,6 +282,11 @@
 		        </tr>
 		        </tbody>
 		    </table>
+    <div class="notes">
+        <ul>
+            <li>Firefox in order to edit dom elements you have to hit the edit button</li>
+        </ul>
+    </div>
 		</article>
 
 		<article>
@@ -305,6 +317,11 @@
 		        </tr>
 		        </tbody>
 		    </table>
+    <div class="notes">
+        <ul>
+            <li>Chrome is the only one that shows the object inheritance</li>
+        </ul>
+    </div>
 		</article>
 
 		<article>
@@ -340,6 +357,12 @@
 		        </tr>
 		        </tbody>
 		    </table>
+    <div class="notes">
+        <ul>
+            <li>Note pause button on firebug breaks on any dom change</li>
+            <li>ON both firebug and chrome you have right click on element to break on modifiications</li>
+        </ul>
+    </div>
 		</article>
 
 		<article>
@@ -365,6 +388,13 @@
 		        </tr>
 		        </tbody>
 		    </table>
+
+    <div class="notes">
+        <ul>
+            <li>Chrome event listeners bottom right panel</li>
+            <li>plugin needed for jquery data</li>
+        </ul>
+    </div>
 		</article>
 
 		<!-- <article>
@@ -415,6 +445,13 @@
 		        </tr>
 		        </tbody>
 		    </table>
+
+    <div class="notes">
+        <ul>
+            <li>Add grid class to section</li>
+            <li>Change font-family on current to 'MyFont'</li>
+        </ul>
+    </div>
 		</article>
 
 		<!-- <article>
@@ -455,6 +492,12 @@
 		        <iframe src='vote.html'>
 		        </iframe>
 		    </div>
+
+    <div class="notes">
+        <ul>
+            <li>Look in resources tab, shows resources for the frame</li>
+        </ul>
+    </div>
 		</article>
 
 		<article>
@@ -495,6 +538,15 @@
 		        </tr>
 		        </tbody>
 		    </table>
+
+    <div class="notes">
+        <ul>
+            <li>siteRes.webSQL.createTable();</li>
+            <li>siteRes.webSQL.loadTable();</li>
+            <li>siteRes.webSQL.emptyTable();</li>
+            <li>siteRes.webSQL.dropTable();</li>
+        </ul>
+    </div>
 		</article>
 
 		<!-- <article>
@@ -525,7 +577,8 @@
 		        </thead>
 		        <tbody>
 		        <tr>
-		            <td>Domain</td>
+            <td>Domain Lookup</td>
+            <td class="yes2"></td>
 		            <td class="yes"></td>
 		            <td class="yes"></td>
 		        </tr>
@@ -554,8 +607,19 @@
 		            <td class="yes"></td>
 		            <td class="yes"></td>
 		        </tr>
+        <tr>
+            <td>Shows Preview (images)</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
 		        </tbody>
 		    </table>
+
+    <div class="notes">
+        <ul>
+            <li>Domain sometimes shows up in Chrome</li>
+        </ul>
+    </div>
 		</article>
 
 		<article>
@@ -640,6 +704,11 @@
 		            <td class="yes"></td>
 		        </tr>
 		        <tr>
+            <td>View Parameters</td>
+            <td></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
 		            <td>Content</td>
 		            <td></td>
 		            <td class="yes"></td>
@@ -676,6 +745,13 @@
 		        </tr>
 		        </tbody>
 		    </table>
+
+    <div class="notes">
+        <ul>
+            <li>Cookies show up in Resources in Chrome</li>
+            <li>Show JSON formatted data in firebug</li>
+        </ul>
+    </div>
 		</article>
 
 		<!-- <article>
@@ -816,15 +892,6 @@
 		    </table>
 		</article>
 
-		<!-- <article>
-		    <h3>Script Debugging</h3>
-		    <h4>Who won?</h4>
-		    <canvas width="500" height="500" class="pie"></canvas>
-		    <ul class="poll">
-		        <li rel="A">Chrome</li>
-		        <li rel="B">Firefox</li>
-		    </ul>
-		</article> -->
 
 		<article>
 		    <h1>
@@ -863,15 +930,6 @@
 		    <a href="profile.html">Profile this page</a>
 		</article>
 
-		<!-- <article>
-		    <h3>Profiling</h3>
-		    <h4>Who won?</h4>
-		    <canvas width="500" height="500" class="pie"></canvas>
-		    <ul class="poll">
-		        <li rel="A">Chrome</li>
-		        <li rel="B">Firefox</li>
-		    </ul>
-		</article> -->
 
 		<article>
 		    <h1>
@@ -914,6 +972,11 @@
 		            <td></td>
 		        </tr>
 		        <tr>
+            <td>Auto Completion</td>
+            <td class="yes"></td>
+            <td class="yes"></td>
+        </tr>
+        <tr>
 		            <td>Multi-line</td>
 		            <td class="yes"></td>
 		            <td></td>
@@ -926,16 +989,6 @@
 		        </tbody>
 		    </table>
 		</article>
-
-		<!-- <article>
-		    <h3>The Console</h3>
-		    <h4>Who won?</h4>
-		    <canvas width="500" height="500" class="pie"></canvas>
-		    <ul class="poll">
-		        <li rel="A">Chrome</li>
-		        <li rel="B">Firefox</li>
-		    </ul>
-		</article> -->
 
 
 		<article>
@@ -971,65 +1024,6 @@
 		    </table>
 		</article>
 
-		<!-- <article>
-		    <h3>Add-ons &amp; Extensions</h3>
-		    <h4>Who won?</h4>
-		    <canvas width="500" height="500" class="pie"></canvas>
-		    <ul class="poll">
-		        <li rel="A">Chrome</li>
-		        <li rel="B">Firefox</li>
-		    </ul>
-		</article> -->
-
-		<article>
-		    <h1>
-		        Under the Hood
-		    </h1>
-		</article>
-
-		<!-- <article>
-		    <h3>Under the Hood</h3>
-		    <h4>Who won?</h4>
-		    <canvas width="500" height="500" class="pie"></canvas>
-		    <ul class="poll">
-		        <li rel="A">Chrome</li>
-		        <li rel="B">Firefox</li>
-		    </ul>
-		</article> -->
-
-
-		<article>
-		    <h1>
-		        Add-ons &amp; Extensions
-		    </h1>
-		</article>
-
-		<!-- <article>
-		    <h3>Add-ons &amp; Extensions</h3>
-		    <h4>Who won?</h4>
-		    <canvas width="500" height="500" class="pie"></canvas>
-		    <ul class="poll">
-		        <li rel="A">Chrome</li>
-		        <li rel="B">Firefox</li>
-		    </ul>
-		</article> -->
-
-		<article>
-		    <h1>
-		        Under the Hood
-		    </h1>
-		</article>
-
-		<!-- <article>
-		    <h3>Under the Hood</h3>
-		    <h4>Who won?</h4>
-		    <canvas width="500" height="500" class="pie"></canvas>
-		    <ul class="poll">
-		        <li rel="A">Chrome</li>
-		        <li rel="B">Firefox</li>
-		    </ul>
-		</article> -->
-	</section>
 
 	<div class='canvas'>
 		<canvas id='canvas' width='700' height='100'/>

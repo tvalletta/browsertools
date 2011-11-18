@@ -26,7 +26,8 @@ var OpinionScale = function(mainRGBA, sliderRGBA, leftImg, rightImg) {
 		var img = new Image();
 		img.onload = function() {
 			ctx.save();
-			ctx.globalAlpha = .5;
+//			ctx.globalAlpha = .5;
+			ctx.globalAlpha = .75;
 			ctx.drawImage(img,x,y);
 			ctx.restore();
 		}
