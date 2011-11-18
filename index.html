@@ -20,13 +20,43 @@
 
     <link rel="stylesheet" href="css/poll.css" type="text/css" media="screen"/>
     <script src='js/slides/slides.js'></script>
-    <script src="js/socket.io/socket.io.min.js"></script>
     <script src="js/jquery.min.js"></script>
-    <script src="js/remote.js"></script>
+
+    <!--script src="js/remote.js"></script -->
+    <!--script src="js/vote.js"></script -->
+
     <script src="js/debug.js"></script>
-    <script src="js/vote.js"></script>
     <script src="js/slides/notes.js"></script>
 
+	<!-- this stuff is for the opinion slider -->
+	<script src="js/lib/socket.io/socket.io.min.js" charset="utf-8"></script>
+	<script src="js/display-connection.js" charset="utf-8"></script>
+	<script src="js/opinion-scale.js" charset="utf-8"></script>
+
+	<script>
+		var scale;
+		function initOpinionScale() {
+			var green 		= new RGBA(122, 179, 50, .75),
+				gold75 		= new RGBA(255, 247, 154, 0.75),
+				gold50 		= new RGBA(255, 247, 154, 0.5),
+				gold25 		= new RGBA(255, 247, 154, 0.25),
+				red 		= new RGBA(255, 9, 20, 0.75),
+				red25 		= new RGBA(255, 9, 20, 0.25),
+				blue 		= new RGBA(0, 173, 239, 0.75),
+				blue25 		= new RGBA(0, 173, 239, 0.25),
+				purple 		= new RGBA(235, 0, 137, 0.75);
+			scale = OpinionScale(blue, blue25, "images/chrome-100x100.png", "images/firebug-100x100.png");
+
+			document.getElementsByTagName('body')[0].addEventListener('keydown', function(e) {
+				if (e.keyCode === 83) {
+					document.getElementById('canvas').style.display = 'block';						
+				}
+				if (e.keyCode === 72) {
+					document.getElementById('canvas').style.display = 'none';						
+				}
+			});
+		}
+	</script>    
     <!--<script type="text/javascript" src="http://localhost:8080/target/target-script-min.js#anonymous"></script>-->
 
     <style>
@@ -127,878 +157,891 @@
 
         }
 
-        canvas.pie {
+/*        canvas.pie {
             position: absolute;
             right: 10px;
             bottom: 10px;
-        }
+        }*/
+		.canvas {
+			position: relative;
+			top: 84%;
+			margin-left: auto;
+			margin-right: auto;
+			width: 700px;
+			height: 100px;
+		}
+		#canvas {
+			display: none;
+		}
+
     </style>
 
 </head>
-<body style='display: none'>
+<body style='display: none' onload='connect(initOpinionScale)'>
+	<section class='slides layout-regular template-default'>
+		
+		<article class="biglogo">
+		    <h1>
+		        Browser Dev Tools
+		    </h1>
 
-<section class='slides layout-regular template-default'>
+		    <p>
+		        Gabriel Dayley &amp; Thomas A. Valletta
+		        <br>
+		        Oct 1X, 2011
+		    </p>
+		</article>
 
-<article class="biglogo">
-    <h1>
-        Browser Dev Tools
-    </h1>
+		<article>
+		    <h1>DOM Inspection</h1>
+		</article>
 
-    <p>
-        Gabriel Dayley &amp; Thomas A. Valletta
-        <br>
-        Oct 1X, 2011
-    </p>
-</article>
+		<article>
+		    <h3>Element Highlighting</h3>
+		    <table>
+		        <!-- hit the magnifying glass -->
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Page Elements</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Inspector</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>DOM Properties</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Element Hierarchy</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Box Model</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h1>DOM Inspection</h1>
-</article>
+		<article>
+		    <h3>View Markup</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Inline edit</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Code folding</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Show comments</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Visual cue for hidden elements</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Visual cue for modified elements</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>Element Highlighting</h3>
-    <table>
-        <!-- hit the magnifying glass -->
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Page Elements</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Inspector</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>DOM Properties</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Element Hierarchy</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Box Model</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h3>DOM Properties</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>View properties and values</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Show Inheritance</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Edit properties and values</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>View Markup</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Inline edit</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Code folding</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Show comments</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Visual cue for hidden elements</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Visual cue for modified elements</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h3>DOM Breakpoints</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Page Change</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Attribute Change</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Subtree Change</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Element Removal</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>DOM Properties</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>View properties and values</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Show Inheritance</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Edit properties and values</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h3>DOM Element Bindings</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Event Listeners</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>jQuery Data</td>
+		            <td></td>
+		            <td></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>DOM Breakpoints</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Page Change</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Attribute Change</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Subtree Change</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Element Removal</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<!-- <article>
+		    <h3>DOM Inspection</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
-<article>
-    <h3>DOM Element Bindings</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Event Listeners</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>jQuery Data</td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h1>CSS Manipulation</h1>
+		</article>
 
-<article>
-    <h3>DOM Inspection</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<article>
+		    <h3>Styles</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <!-- full, categorized -->
+		            <td>Computed</td>
+		            <td class="yes"></td>
+		            <td class="yes2"></td>
+		        </tr>
+		        <tr>
+		            <td>Inline</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Matched rules</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Element states</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h1>CSS Manipulation</h1>
-</article>
+		<!-- <article>
+		    <h3>CSS Manipulation</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
-<article>
-    <h3>Styles</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <!-- full, categorized -->
-            <td>Computed</td>
-            <td class="yes"></td>
-            <td class="yes2"></td>
-        </tr>
-        <tr>
-            <td>Inline</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Matched rules</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Element states</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h1>
+		        Site Resources
+		    </h1>
+		</article>
 
-<article>
-    <h3>CSS Manipulation</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<article>
+		    <h3>Frames</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Frames</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		    <div style='width: 400px; height: 200px; margin-left: auto; margin-right: auto; padding: 20px'>
+		        <iframe src='vote.html'>
+		        </iframe>
+		    </div>
+		</article>
 
-<article>
-    <h1>
-        Site Resources
-    </h1>
-</article>
+		<article>
+		    <h3>Resources</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Databases</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Local Storage</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Session Storage</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Cookies</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Application Cache</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>Frames</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Frames</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-    <div style='width: 400px; height: 200px; margin-left: auto; margin-right: auto; padding: 20px'>
-        <iframe src='vote.html'>
-        </iframe>
-    </div>
-</article>
+		<!-- <article>
+		    <h3>Site Resources</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
-<article>
-    <h3>Resources</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Databases</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Local Storage</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Session Storage</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Cookies</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Application Cache</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h1>
+		        Network Tools
+		    </h1>
+		</article>
 
-<article>
-    <h3>Site Resources</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<article>
+		    <h3>Grid</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Domain</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Remote IP</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Method</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Content Type</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Status Code</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Size</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h1>
-        Network Tools
-    </h1>
-</article>
+		<article>
+		    <h3>Timeline</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>DNS Lookup</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Connecting</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Sending</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Waiting</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Receiving</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Total requests</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Total data transferred</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Total data from cache</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>DOMContentLoaded</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>onload</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>Grid</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Domain</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Remote IP</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Method</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Content Type</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Status Code</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Size</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h3>Drill Down</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Headers</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Content</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Cookies</td>
+		            <td class="yes"></td>
+		            <td class="yes3"></td>
+		        </tr>
+		        <tr>
+		            <td>Cache</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Timing</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Formatting</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Filtering</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Web Sockets</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>Timeline</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>DNS Lookup</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Connecting</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Sending</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Waiting</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Receiving</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Total requests</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Total data transferred</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Total data from cache</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>DOMContentLoaded</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>onload</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<!-- <article>
+		    <h3>Network Tools</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
-<article>
-    <h3>Drill Down</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Headers</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Content</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Cookies</td>
-            <td class="yes"></td>
-            <td class="yes3"></td>
-        </tr>
-        <tr>
-            <td>Cache</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Timing</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Formatting</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Filtering</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Web Sockets</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h1>
+		        Script Debugging
+		    </h1>
+		</article>
 
-<article>
-    <h3>Network Tools</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<article>
+		    <h3>Scripts</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Filter Scripts</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Extension Scripts</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Eval Scripts</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Syntax highlight/Color</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Pretty Print</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h1>
-        Script Debugging
-    </h1>
-</article>
+		<article>
+		    <h3>Breakpoints</h3>
+		    <!-- Set breakpoint on vote.js => addEventListener "slideenter" -->
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Conditional</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>DOM</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>XHR</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Event Listener</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Web Workers</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>Scripts</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Filter Scripts</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Extension Scripts</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Eval Scripts</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Syntax highlight/Color</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Pretty Print</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h3>Debugging</h3>
+		    <!-- Set breakpoint on vote.js => addEventListener "slideenter" -->
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Watch Expressions</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Call Stack</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr id='debugme'>
+		            <td>Arguments</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Function Signatures</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Click to go to function</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h3>Breakpoints</h3>
-    <!-- Set breakpoint on vote.js => addEventListener "slideenter" -->
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Conditional</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>DOM</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>XHR</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Event Listener</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Web Workers</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<!-- <article>
+		    <h3>Script Debugging</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
-<article>
-    <h3>Debugging</h3>
-    <!-- Set breakpoint on vote.js => addEventListener "slideenter" -->
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Watch Expressions</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Call Stack</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr id='debugme'>
-            <td>Arguments</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Function Signatures</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Click to go to function</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
+		<article>
+		    <h1>
+		        Profiling
+		    </h1>
+		</article>
 
-<article>
-    <h3>Script Debugging</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<article>
+		    <h3>Profiling</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Analyze resource loading, parsing, rendering</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Profile execution time</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Profile memory usage</td>
+		            <td class="yes"></td>
+		            <td>??</td>
+		        </tr>
+		        </tbody>
+		    </table>
+		    <a href="profile.html">Profile this page</a>
+		</article>
 
-<article>
-    <h1>
-        Profiling
-    </h1>
-</article>
+		<!-- <article>
+		    <h3>Profiling</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
-<article>
-    <h3>Profiling</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Analyze resource loading, parsing, rendering</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Profile execution time</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Profile memory usage</td>
-            <td class="yes"></td>
-            <td>??</td>
-        </tr>
-        </tbody>
-    </table>
-    <a href="profile.html">Profile this page</a>
-</article>
+		<article>
+		    <h1>
+		        The Console
+		    </h1>
 
-<article>
-    <h3>Profiling</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		    <div class="notes">
+		        <h3>The console</h3>
+		        <ul>
+		            <li>Not just for logging</li>
+		            <li>Interact directly with JavaScript interpreter</li>
+		            <li>Console API</li>
+		            <ol>
+		                <li>clear()</li>
+		                <li>dir()</li>
+		                <li>dirxml()</li>
+		                <li>inspect()</li>
+		                <li>$0</li>
+		                <li>copy()</li>
+		            </ol>
+		        </ul>
 
-<article>
-    <h1>
-        The Console
-    </h1>
+		    </div>
+		</article>
 
-    <div class="notes">
-        <h3>The console</h3>
-        <ul>
-            <li>Not just for logging</li>
-            <li>Interact directly with JavaScript interpreter</li>
-            <li>Console API</li>
-            <ol>
-                <li>clear()</li>
-                <li>dir()</li>
-                <li>dirxml()</li>
-                <li>inspect()</li>
-                <li>$0</li>
-                <li>copy()</li>
-            </ol>
-        </ul>
+		<article>
+		    <h3>The Console</h3>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>Logging</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Multi-line</td>
+		            <td class="yes"></td>
+		            <td></td>
+		        </tr>
+		        <tr>
+		            <td>Console API</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-    </div>
-</article>
-
-<article>
-    <h3>The Console</h3>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Logging</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Multi-line</td>
-            <td class="yes"></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Console API</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
-
-<article>
-    <h3>The Console</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
-
-
-<article>
-    <h1>Extras, Add-ons &amp; Extensions</h1>
-</article>
-
-<article>
-    <table>
-        <thead>
-        <tr>
-            <th></th>
-            <th class="chrome"></th>
-            <th class="ff"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>API for Add-On's</td>
-            <td class="yes3"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
-            <td>Remote Debugging</td>
-            <td class="yes"></td>
-            <td class="yes3"></td>
-        </tr>
-        <tr>
-            <td>Masquerading</td>
-            <td class="yes"></td>
-            <td class="yes3"></td>
-        </tr>
-        </tbody>
-    </table>
-</article>
-
-<article>
-    <h3>Add-ons &amp; Extensions</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
-
-<article>
-    <h1>
-        Under the Hood
-    </h1>
-</article>
-
-<article>
-    <h3>Under the Hood</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<!-- <article>
+		    <h3>The Console</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
 
-<article>
-    <h1>
-        Add-ons &amp; Extensions
-    </h1>
-</article>
+		<article>
+		    <h1>Extras, Add-ons &amp; Extensions</h1>
+		</article>
 
-<article>
-    <h3>Add-ons &amp; Extensions</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<article>
+		    <table>
+		        <thead>
+		        <tr>
+		            <th></th>
+		            <th class="chrome"></th>
+		            <th class="ff"></th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+		            <td>API for Add-On's</td>
+		            <td class="yes3"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
+		            <td>Remote Debugging</td>
+		            <td class="yes"></td>
+		            <td class="yes3"></td>
+		        </tr>
+		        <tr>
+		            <td>Masquerading</td>
+		            <td class="yes"></td>
+		            <td class="yes3"></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		</article>
 
-<article>
-    <h1>
-        Under the Hood
-    </h1>
-</article>
+		<!-- <article>
+		    <h3>Add-ons &amp; Extensions</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
-<article>
-    <h3>Under the Hood</h3>
-    <h4>Who won?</h4>
-    <canvas width="500" height="500" class="pie"></canvas>
-    <ul class="poll">
-        <li rel="A">Chrome</li>
-        <li rel="B">Firefox</li>
-    </ul>
-</article>
+		<article>
+		    <h1>
+		        Under the Hood
+		    </h1>
+		</article>
+
+		<!-- <article>
+		    <h3>Under the Hood</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
 
 
-</section>
+		<article>
+		    <h1>
+		        Add-ons &amp; Extensions
+		    </h1>
+		</article>
 
-<script src="js/resources.js"></script>
-<script>
-    $.getJSON('data/json.json', null, function() {
-        console.log('Fetched JSON');
-    });
-    var siteRes = SiteResources();
-    //    var siteRes = SiteResources();
-</script>
+		<!-- <article>
+		    <h3>Add-ons &amp; Extensions</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
+
+		<article>
+		    <h1>
+		        Under the Hood
+		    </h1>
+		</article>
+
+		<!-- <article>
+		    <h3>Under the Hood</h3>
+		    <h4>Who won?</h4>
+		    <canvas width="500" height="500" class="pie"></canvas>
+		    <ul class="poll">
+		        <li rel="A">Chrome</li>
+		        <li rel="B">Firefox</li>
+		    </ul>
+		</article> -->
+	</section>
+
+	<div class='canvas'>
+		<canvas id='canvas' width='700' height='100'/>
+	</div>
+
+	<script src="js/resources.js"></script>
+	<script>
+	    $.getJSON('data/json.json', null, function() {
+	        console.log('Fetched JSON');
+	    });
+	    var siteRes = SiteResources();
+	    //    var siteRes = SiteResources();
+	</script>
 </body>
 </html>
