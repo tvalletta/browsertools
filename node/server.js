@@ -53,16 +53,22 @@ io.sockets.on('connection', function (socket) {
 	});
 
     socket.on('vote', function(vote) {
-		var prior = voters[socket.guid].vote;
-		var pos = ((vote > 0)? vote : 0) - ((prior > 0)? prior : 0);
-		var neg = ((vote < 0)? vote : 0) - ((prior < 0)? prior : 0);
-		voters[socket.guid].vote = vote;
-		totals.pos += pos;
-		totals.neg += -neg;
+		var voter = voters[socket.guid];
+		if (voter) {
+			var prior = voter.vote;
+			var pos = ((vote > 0)? vote : 0) - ((prior > 0)? prior : 0);
+			var neg = ((vote < 0)? vote : 0) - ((prior < 0)? prior : 0);
+			voter.vote = vote;
+			totals.pos += pos;
+			totals.neg += -neg;
 		
-		totals.cnt = voters.length;
-        socket.broadcast.emit('score', totals);
-        socket.emit('score', totals);
+			totals.cnt = voters.length;
+	        socket.broadcast.emit('score', totals);
+	        socket.emit('score', totals);
+		}
+		else {
+			socket.emit('hack-fail');
+		}
     });
 
 });

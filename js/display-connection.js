@@ -1,5 +1,5 @@
 var socket,
-	server = 'http://localhost:3009';
+	server = 'http://127.0.0.1:3009';
 
 var connect = function(callback) {
 	console.log("Attempting to connect to " + server);

@@ -22,7 +22,6 @@
     <script src='js/slides/slides.js'></script>
     <script src="js/jquery.min.js"></script>
 
-    <!--script src="js/remote.js"></script -->
     <!--script src="js/vote.js"></script -->
 
     <script src="js/debug.js"></script>
@@ -32,6 +31,8 @@
 	<script src="js/lib/socket.io/socket.io.min.js" charset="utf-8"></script>
 	<script src="js/display-connection.js" charset="utf-8"></script>
 	<script src="js/opinion-scale.js" charset="utf-8"></script>
+
+    <script src="js/remote.js"></script>
 
 	<script>
 		var scale;
@@ -238,8 +239,15 @@
 		    </table>
     <div class="notes">
         <ul>
-            <li>Firefox puts ruler when highlighting from box model</li>
-            <li>IE doesn't highlight page elements with box model</li>
+            <li>Clicking an icon lets you highlight elements in the browser window</li>
+            <li>From the inspector you can mouse over elements to highlight them in the browser window</li>
+            <li>From the DOM properties you can mouse over element references to highlight them in the browser window (FF)</li>
+            <li>From the element hierarchy you can mouse over element references to highlight them in the browser window</li>
+            <li>From the box model you can mouse over element references to highlight them in the browser window</li>
+            <li>NOTE - Firefox: puts ruler when highlighting from box model</li>
+            <li>NOTE - Chrome: Seems to handle CSS transitions better</li>
+            <li>NOTE - Chrome: Displays a hint when objects are off of the page</li>
+            <li>NOTE - IE: doesn't highlight page elements with box model</li>
         </ul>
     </div>
 		</article>
@@ -284,7 +292,10 @@
 		    </table>
     <div class="notes">
         <ul>
-            <li>Firefox in order to edit dom elements you have to hit the edit button</li>
+            <li>Chrome: Right-click > "Edit as HTML" to go to plain text mode</li>
+            <li>Firefox: You may hit the "Edit" button to go to plain text mode</li>
+            <li>Firefox: Hidden elements are slightly faded in the inspector</li>
+            <li>Firefox: Modified elements flash yellow</li>
         </ul>
     </div>
 		</article>
@@ -319,7 +330,10 @@
 		    </table>
     <div class="notes">
         <ul>
-            <li>Chrome is the only one that shows the object inheritance</li>
+            <li>Chrome: Find DOM properties in a panel to the right of the inspector view</li>
+            <li>Firefox: Find DOM properties in a tab to the right of the inspector view or in its own tab(?)</li>
+            <li>Chrome: Shows the object inheritance hierarchy</li>
+            <li>!Chrome: Collapses properties when another element is selected</li>
         </ul>
     </div>
 		</article>
@@ -359,14 +373,15 @@
 		    </table>
     <div class="notes">
         <ul>
-            <li>Note pause button on firebug breaks on any dom change</li>
-            <li>ON both firebug and chrome you have right click on element to break on modifiications</li>
+            <li>Firefox: Pause button breaks on any DOM change</li>
+            <li>Firefox, Chrome: you have right click on element to break on modifications</li>
+            <li>!Firefox: Shows DOM breakpoints in the script tab</li>
         </ul>
     </div>
 		</article>
 
 		<article>
-		    <h3>DOM Element Bindings</h3>
+		    <h3 id='attacheroo'>DOM Element Bindings</h3>
 		    <table>
 		        <thead>
 		        <tr>
@@ -388,11 +403,12 @@
 		        </tr>
 		        </tbody>
 		    </table>
-
     <div class="notes">
         <ul>
-            <li>Chrome event listeners bottom right panel</li>
-            <li>plugin needed for jquery data</li>
+            <li>Chrome: Event listeners bottom right panel</li>
+            <li>Firefox, Chrome: Plugin available for jquery data</li>
+            <li>NOTE - Chrome: Find event listeners attached to body element</li>
+            <li>NOTE - Chrome: Follow event listeners to relevant script</li>
         </ul>
     </div>
 		</article>
@@ -426,7 +442,7 @@
 		            <!-- full, categorized -->
 		            <td>Computed</td>
 		            <td class="yes"></td>
-		            <td class="yes2"></td>
+		            <td class="yes"></td>
 		        </tr>
 		        <tr>
 		            <td>Inline</td>
@@ -439,19 +455,26 @@
 		            <td class="yes"></td>
 		        </tr>
 		        <tr>
+		            <td>Overridden rules</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
 		            <td>Element states</td>
 		            <td class="yes"></td>
 		            <td class="yes"></td>
 		        </tr>
 		        </tbody>
 		    </table>
-
-    <div class="notes">
-        <ul>
-            <li>Add grid class to section</li>
-            <li>Change font-family on current to 'MyFont'</li>
-        </ul>
-    </div>
+		    <div class="notes">
+		        <ul>
+		            <li>Firefox: Computed styles in tab right of inspector</li>
+		            <li>Chrome: Computed styles in panel right of inspector</li>
+		            <li>Firefox, Chrome: Element states (hover, active) can be simulated</li>
+		            <li>DEMO: Add "grid" class to section</li>
+		            <li>DEMO: Change font-family on current to 'MyFont'</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<!-- <article>
@@ -489,15 +512,14 @@
 		        </tbody>
 		    </table>
 		    <div style='width: 400px; height: 200px; margin-left: auto; margin-right: auto; padding: 20px'>
-		        <iframe src='vote.html'>
+		        <iframe src='voter.html'>
 		        </iframe>
 		    </div>
-
-    <div class="notes">
-        <ul>
-            <li>Look in resources tab, shows resources for the frame</li>
-        </ul>
-    </div>
+		    <div class="notes">
+		        <ul>
+		            <li>Chrome: Resources tab shows resources for the frame</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<article>
@@ -538,15 +560,16 @@
 		        </tr>
 		        </tbody>
 		    </table>
-
-    <div class="notes">
-        <ul>
-            <li>siteRes.webSQL.createTable();</li>
-            <li>siteRes.webSQL.loadTable();</li>
-            <li>siteRes.webSQL.emptyTable();</li>
-            <li>siteRes.webSQL.dropTable();</li>
-        </ul>
-    </div>
+		    <div class="notes">
+		        <ul>
+		            <li>Chrome: The resources tab has all of these sections</li>
+		            <li>DEMO: siteRes.webSQL.createTable();</li>
+		            <li>DEMO: siteRes.webSQL.loadTable();</li>
+		            <li>DEMO: siteRes.webSQL.emptyTable();</li>
+		            <li>DEMO: siteRes.webSQL.dropTable();</li>
+		            <li>NOTE: This is a really big deal.  It is hard to debug without this stuff.</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<!-- <article>
@@ -569,16 +592,15 @@
 		    <h3>Grid</h3>
 		    <table>
 		        <thead>
-		        <tr>
-		            <th></th>
-		            <th class="chrome"></th>
-		            <th class="ff"></th>
-		        </tr>
+			        <tr>
+			            <th></th>
+			            <th class="chrome"></th>
+			            <th class="ff"></th>
+			        </tr>
 		        </thead>
 		        <tbody>
 		        <tr>
-            <td>Domain Lookup</td>
-            <td class="yes2"></td>
+	            	<td>Domain Lookup</td>
 		            <td class="yes"></td>
 		            <td class="yes"></td>
 		        </tr>
@@ -595,7 +617,7 @@
 		        <tr>
 		            <td>Content Type</td>
 		            <td class="yes"></td>
-		            <td></td>
+		            <td class="yes2"></td>
 		        </tr>
 		        <tr>
 		            <td>Status Code</td>
@@ -607,19 +629,22 @@
 		            <td class="yes"></td>
 		            <td class="yes"></td>
 		        </tr>
-        <tr>
-            <td>Shows Preview (images)</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
+		        <tr>
+		            <td>Shows Preview (images)</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
 		        </tbody>
 		    </table>
-
-    <div class="notes">
-        <ul>
-            <li>Domain sometimes shows up in Chrome</li>
-        </ul>
-    </div>
+		    <div class="notes">
+		        <ul>
+		            <li>Chrome: Domain sometimes shows</li>
+		            <li>Firefox, Chrome: Blue and red lines show DOMContentLoaded, load (Firefox labels them in hover)</li>
+		            <li>Firefox: DNS Lookup times in Timeline:hover</li>
+		            <li>Firefox: Content Type shown in headers tab of expanded network request item</li>
+		            <li>Firefox: Timeline:hover is good looking (multiple columns)</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<article>
@@ -685,6 +710,11 @@
 		        </tr>
 		        </tbody>
 		    </table>
+		    <div class="notes">
+		        <ul>
+		            <li>Chrome: Timeline tab is covered in profiling (its cool)</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<article>
@@ -704,11 +734,11 @@
 		            <td class="yes"></td>
 		        </tr>
 		        <tr>
-            <td>View Parameters</td>
-            <td></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
+		            <td>View Parameters</td>
+		            <td></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
 		            <td>Content</td>
 		            <td></td>
 		            <td class="yes"></td>
@@ -716,7 +746,7 @@
 		        <tr>
 		            <td>Cookies</td>
 		            <td class="yes"></td>
-		            <td class="yes3"></td>
+		            <td class="yes2"></td>
 		        </tr>
 		        <tr>
 		            <td>Cache</td>
@@ -730,7 +760,7 @@
 		        </tr>
 		        <tr>
 		            <td>Formatting</td>
-		            <td></td>
+		            <td class="yes"></td>
 		            <td class="yes"></td>
 		        </tr>
 		        <tr>
@@ -745,13 +775,12 @@
 		        </tr>
 		        </tbody>
 		    </table>
-
-    <div class="notes">
-        <ul>
-            <li>Cookies show up in Resources in Chrome</li>
-            <li>Show JSON formatted data in firebug</li>
-        </ul>
-    </div>
+		    <div class="notes">
+		        <ul>
+		            <li>Chrome: Cookies show up in resources</li>
+		            <li>DEMO: Show JSON formatted data file: json.json</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<!-- <article>
@@ -808,6 +837,11 @@
 		        </tr>
 		        </tbody>
 		    </table>
+		    <div class="notes">
+		        <ul>
+		            <li>!Chrome: Extension scripts clutter up script list</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<article>
@@ -849,6 +883,12 @@
 		        </tr>
 		        </tbody>
 		    </table>
+		    <div class="notes">
+		        <ul>
+		            <li>Chrome: Breakpoint stuff in panel on right of scripts</li>
+		            <li>DEMO: Chrome: XHR breakpoint at json.json > refresh</li>
+		        </ul>
+		    </div>
 		</article>
 
 		<article>
@@ -881,7 +921,7 @@
 		        <tr>
 		            <td>Function Signatures</td>
 		            <td class="yes"></td>
-		            <td></td>
+		            <td class="yes"></td>
 		        </tr>
 		        <tr>
 		            <td>Click to go to function</td>
@@ -890,6 +930,13 @@
 		        </tr>
 		        </tbody>
 		    </table>
+		    <div class="notes">
+		        <ul>
+		            <li>DEMO: Firefox: Breakpoint: debug.js line 6. Run debug.run(). Notice "arguments" pseudo array.</li>
+		            <li>Firefox, Chrome: Function signatures just show parameters on functions</li>
+		            <li>Firefox, Chrome: "Click to go to function" from call stack</li>
+		        </ul>
+		    </div>
 		</article>
 
 
@@ -923,11 +970,16 @@
 		        <tr>
 		            <td>Profile memory usage</td>
 		            <td class="yes"></td>
-		            <td>??</td>
+		            <td></td>
 		        </tr>
 		        </tbody>
 		    </table>
 		    <a href="profile.html">Profile this page</a>
+		    <div class="notes">
+		        <ul>
+		            <li>DEMO: Chrome: Profiler</li>
+		        </ul>
+		    </div>
 		</article>
 
 
@@ -935,24 +987,6 @@
 		    <h1>
 		        The Console
 		    </h1>
-
-		    <div class="notes">
-		        <h3>The console</h3>
-		        <ul>
-		            <li>Not just for logging</li>
-		            <li>Interact directly with JavaScript interpreter</li>
-		            <li>Console API</li>
-		            <ol>
-		                <li>clear()</li>
-		                <li>dir()</li>
-		                <li>dirxml()</li>
-		                <li>inspect()</li>
-		                <li>$0</li>
-		                <li>copy()</li>
-		            </ol>
-		        </ul>
-
-		    </div>
 		</article>
 
 		<article>
@@ -972,14 +1006,14 @@
 		            <td></td>
 		        </tr>
 		        <tr>
-            <td>Auto Completion</td>
-            <td class="yes"></td>
-            <td class="yes"></td>
-        </tr>
-        <tr>
+		            <td>Auto Completion</td>
+		            <td class="yes"></td>
+		            <td class="yes"></td>
+		        </tr>
+		        <tr>
 		            <td>Multi-line</td>
 		            <td class="yes"></td>
-		            <td></td>
+		            <td class="yes"></td>
 		        </tr>
 		        <tr>
 		            <td>Console API</td>
@@ -988,6 +1022,30 @@
 		        </tr>
 		        </tbody>
 		    </table>
+		    <div class="notes">
+		        <h3>The console</h3>
+		        <ul>
+		            <li>Chrome: Multi-line console all in the same spot</li>
+		            <li>Firefox: Console does not require "shift + enter" for new line</li>
+		            <li>Firefox: Can view console history</li>
+		            <li>DEMO: Console features</li>
+					<li>
+						<ul>
+				            <li>Not just for logging</li>
+				            <li>Interact directly with JavaScript interpreter</li>
+				            <li>Console API</li>
+				            <ol>
+				                <li>clear()</li>
+				                <li>dir()</li>
+				                <li>dirxml()</li>
+				                <li>inspect()</li>
+				                <li>$0</li>
+				                <li>copy()</li>
+				            </ol>
+						</ul>
+					</li>
+		        </ul>
+		    </div>
 		</article>
 
 
@@ -1007,7 +1065,7 @@
 		        <tbody>
 		        <tr>
 		            <td>API for Add-On's</td>
-		            <td class="yes3"></td>
+		            <td class="yes"></td>
 		            <td class="yes"></td>
 		        </tr>
 		        <tr>
@@ -1015,15 +1073,17 @@
 		            <td class="yes"></td>
 		            <td class="yes3"></td>
 		        </tr>
-		        <tr>
-		            <td>Masquerading</td>
-		            <td class="yes"></td>
-		            <td class="yes3"></td>
-		        </tr>
 		        </tbody>
 		    </table>
+		    <div class="notes">
+		        <ul>
+		            <li>Chrome: Not quite the add-on market that Firefox has</li>
+		            <li>Firefox: Allegedly in 1.9 but I could not find it</li>
+		            <li>Chrome: Node Inspector</li>
+		            <li>Chrome: Weinre</li>
+		        </ul>
+		    </div>
 		</article>
-
 
 	<div class='canvas'>
 		<canvas id='canvas' width='700' height='100'/>

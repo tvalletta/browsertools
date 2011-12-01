@@ -57,8 +57,8 @@ table tr:nth-child(2n+1) {
 
 .usesprites > .ie {
     -webkit-transition: -webkit-transform .5s ease-in;
-    /*background: url(../images/browsers.jpg) -143px 0;*/
-    background: url(../images/browsers/images/browsers_02.jpg) 50% 50% no-repeat;
+    background: url(../images/browsers/browsers.jpg) -143px 0;
+    /*background: url(../images/browsers/images/browsers_02.jpg) 50% 50% no-repeat;*/
 }
 
 .usesprites > .ff {

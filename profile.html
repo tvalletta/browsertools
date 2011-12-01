@@ -12,7 +12,7 @@
 
             var table = document.querySelector("#table");
 
-//            document.getElementById('table-div').removeChild(table);
+           // document.getElementById('table-div').removeChild(table);
 
             for (var i = 0; i < 30000; i++) {
                 var row = document.createElement("tr");
@@ -21,8 +21,8 @@
                 table.appendChild(row);
             }
             
-//            document.getElementById('table-div').appendChild(table);
-//            console.profileEnd();
+           // document.getElementById('table-div').appendChild(table);
+           console.profileEnd();
         }
     </script>
 </head>
@@ -37,7 +37,7 @@
 
     <button onclick='addRows();'>Add 30,000 rows</button>
 
-    <div class="browsers">
+    <div class="browsers usesprites">
         <div class="ie"></div>
         <div class="ff"></div>
         <div class="chrome"></div>
