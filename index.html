@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/poll.css" type="text/css" media="screen"/>
     <script src='js/slides/slides.js'></script>
     <script src="js/jquery.min.js"></script>
+    <script src='js/lib/jquery.qrcode.min.js'></script>
 
     <!--script src="js/vote.js"></script -->
 
@@ -182,6 +183,40 @@
 <body style='display: none' onload='connect(initOpinionScale)'>
 	<section class='slides layout-regular template-default'>
 		
+		<article>
+		    <input id="ip" type="text" value="http://10.0.0.88/~nacho/browsertools/voter.html"
+		           style="width: 775px;
+		            height: 45px;
+		            font-size: 30px;
+		            border: 1px solid #333;
+		            border-radius: 5px;
+		            line-height: 45px;
+		            background: black;
+		            color: white;">
+
+		    <div id="qr" class="centered" style="left: 50%; top: 30px; position: relative; margin-left: -256px;"></div>
+
+
+		    <script>
+		        $(function() {
+		            var ip = document.getElementById('ip');
+		            ip.addEventListener('keydown', function(e) {
+		                e.stopPropagation();
+		            });
+		            ip.addEventListener('keyup', function() {
+		                generateQR(ip.value);
+		            });
+		            var generateQR = function(text) {
+		                var qr = $("#qr");
+		                qr.empty();
+		                qr.qrcode({width: 512,height: 512,text: text});
+		            };
+
+		            generateQR(ip.value);
+		        });
+		    </script>
+		</article>
+		
 		<article class="biglogo">
 		    <h1>
 		        Browser Dev Tools
@@ -190,7 +225,7 @@
 		    <p>
 		        Gabriel Dayley &amp; Thomas A. Valletta
 		        <br>
-		        Oct 1X, 2011
+		        Dec 1, 2011
 		    </p>
 		</article>
 
